@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://eowkjfy6pj07"]
+
+[ext_resource type="Texture2D" uid="uid://jtthabwr2vkp" path="res://textures/broken_crate_part.png" id="1_6x2q4"]
+[ext_resource type="Script" path="res://scenes/world/crate_explosion_particles.gd" id="2_j58cg"]
+
+[sub_resource type="Curve" id="Curve_6ukhv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ntybu"]
+curve = SubResource("Curve_6ukhv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4hj4d"]
+particle_flag_align_y = true
+emission_shape = 2
+emission_sphere_radius = 0.25
+angle_max = 180.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.5
+angular_velocity_max = 180.0
+radial_velocity_min = 0.1
+radial_velocity_max = 0.4
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 3.0
+radial_accel_max = 4.0
+tangential_accel_max = 2.4
+scale_min = 0.1
+scale_over_velocity_max = 3.0
+scale_over_velocity_curve = SubResource("CurveTexture_ntybu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ca8l"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_6x2q4")
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_m804h"]
+material = SubResource("StandardMaterial3D_6ca8l")
+size = Vector2(0.5, 0.5)
+
+[node name="CrateExplosionParticles" type="GPUParticles3D"]
+emitting = false
+amount = 12
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-1.5, -1.5, -1.5, 3, 3, 3)
+process_material = SubResource("ParticleProcessMaterial_4hj4d")
+draw_pass_1 = SubResource("QuadMesh_m804h")
+script = ExtResource("2_j58cg")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

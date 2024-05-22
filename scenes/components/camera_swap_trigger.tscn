@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj7jnl1qnbmvw"]
+
+[ext_resource type="Script" path="res://scenes/components/camera_swap_trigger.gd" id="1_6jmnj"]
+
+[node name="CameraSwapTrigger" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_6jmnj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://7fa6088tgp2a"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_7f2qe"]
+[ext_resource type="PackedScene" uid="uid://8nljmsm152sj" path="res://scenes/components/hitbox.tscn" id="1_rv21j"]
+[ext_resource type="PackedScene" uid="uid://5s0dxmwxgnof" path="res://scenes/components/hurtbox.tscn" id="2_p5lfp"]
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 32
+script = ExtResource("1_7f2qe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.224776, 0)
+
+[node name="Hitbox" parent="." instance=ExtResource("1_rv21j")]
+collision_mask = 8
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.220731, 0)
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_p5lfp")]
+collision_layer = 16
+
+[node name="CollisionShape3D" parent="Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215331, 0)
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]

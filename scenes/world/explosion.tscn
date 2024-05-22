@@ -1,0 +1,122 @@
+[gd_scene load_steps=21 format=3 uid="uid://ccgb5ei731chx"]
+
+[ext_resource type="Texture2D" uid="uid://cbnsukshunvy7" path="res://textures/circle_05_smaller.png" id="1_4wrnt"]
+[ext_resource type="Script" path="res://scenes/world/explosion.gd" id="1_dgdjk"]
+[ext_resource type="Material" uid="uid://c7k30p84h228e" path="res://materials/mat_flash.tres" id="2_pxori"]
+
+[sub_resource type="Curve" id="Curve_014rb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.215094), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_33xsp"]
+max_value = 3.0
+_data = [Vector2(0, 2.50189), 0.0, 0.0, 0, 0, Vector2(1, 0.826415), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_t5l8i"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_vvc6t"]
+curve_x = SubResource("Curve_014rb")
+curve_y = SubResource("Curve_33xsp")
+curve_z = SubResource("Curve_t5l8i")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kf72y"]
+particle_flag_align_y = true
+emission_shape = 3
+emission_box_extents = Vector3(0.25, 0.25, 0.25)
+angle_max = 180.0
+radial_velocity_min = 8.0
+radial_velocity_max = 15.0
+gravity = Vector3(0, 0, 0)
+scale_over_velocity_min = 0.15
+scale_over_velocity_max = 0.5
+scale_over_velocity_curve = SubResource("CurveXYZTexture_vvc6t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_unaxh"]
+transparency = 2
+alpha_scissor_threshold = 0.1
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(5, 2, 1, 1)
+albedo_texture = ExtResource("1_4wrnt")
+
+[sub_resource type="QuadMesh" id="QuadMesh_oal02"]
+material = SubResource("StandardMaterial3D_unaxh")
+
+[sub_resource type="Curve" id="Curve_qdmgp"]
+_data = [Vector2(0, 1), 0.0, 0.252429, 0, 0, Vector2(0.851145, 0.441509), -0.878826, -0.878826, 0, 0, Vector2(1, 0), -1.35734, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_or44v"]
+curve = SubResource("Curve_qdmgp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oytrx"]
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_or44v")
+
+[sub_resource type="QuadMesh" id="QuadMesh_c1g8f"]
+material = ExtResource("2_pxori")
+
+[sub_resource type="Gradient" id="Gradient_r4pl0"]
+colors = PackedColorArray(5, 2, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x1fds"]
+gradient = SubResource("Gradient_r4pl0")
+
+[sub_resource type="Curve" id="Curve_7rhj8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_m3qbv"]
+curve = SubResource("Curve_7rhj8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ogltc"]
+emission_shape = 1
+emission_sphere_radius = 0.3
+angle_max = 180.0
+gravity = Vector3(0, -2, 0)
+scale_min = 0.75
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_m3qbv")
+color_ramp = SubResource("GradientTexture1D_x1fds")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ta5nj"]
+material = ExtResource("2_pxori")
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_dgdjk")
+
+[node name="Sparks" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 12
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_kf72y")
+draw_pass_1 = SubResource("QuadMesh_oal02")
+
+[node name="Flash" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 1
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_oytrx")
+draw_pass_1 = SubResource("QuadMesh_c1g8f")
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+lifetime = 0.55
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ogltc")
+draw_pass_1 = SubResource("QuadMesh_ta5nj")

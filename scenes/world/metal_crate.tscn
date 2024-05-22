@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://ct1rllmu4n3jw"]
+
+[ext_resource type="Script" path="res://scenes/world/metal_crate.gd" id="1_kxnyh"]
+[ext_resource type="Texture2D" uid="uid://b6vh6ookyeyv6" path="res://models/metal_crate_metal_crate_texture.png" id="1_u1rvq"]
+[ext_resource type="PackedScene" uid="uid://8nljmsm152sj" path="res://scenes/components/hitbox.tscn" id="2_x4iy0"]
+[ext_resource type="AudioStream" uid="uid://caytqxgx81nvi" path="res://sounds/metal_hit_double.wav" id="4_608jk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1m2ha"]
+resource_name = "Material.001"
+cull_mode = 2
+albedo_texture = ExtResource("1_u1rvq")
+metallic = 0.2
+texture_filter = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tmqad"]
+_surfaces = [{
+"aabb": AABB(-0.25, -0.25, -0.25, 0.5, 0.5, 0.50001),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray(0, 0, 3, 0, 2, 0, 0, 0, 1, 0, 3, 0, 2, 0, 7, 0, 6, 0, 2, 0, 3, 0, 7, 0, 6, 0, 5, 0, 4, 0, 6, 0, 7, 0, 5, 0, 4, 0, 1, 0, 0, 0, 4, 0, 5, 0, 1, 0, 2, 0, 4, 0, 0, 0, 2, 0, 6, 0, 4, 0, 7, 0, 1, 0, 5, 0, 7, 0, 3, 0, 1, 0),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 253, 255, 0, 0, 0, 0, 255, 255, 253, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 253, 255, 0, 0, 255, 255, 255, 255, 253, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7lkkx"]
+resource_name = "metal_crate_Cube_001"
+_surfaces = [{
+"aabb": AABB(-0.25, -0.25, -0.25, 0.5, 0.5, 0.50001),
+"attribute_data": PackedByteArray(128, 255, 126, 255, 128, 255, 126, 255, 63, 128, 255, 255, 255, 255, 192, 127, 255, 255, 192, 127, 192, 127, 63, 127, 63, 128, 255, 255, 63, 128, 255, 255, 128, 255, 126, 255, 192, 127, 63, 127, 192, 127, 63, 127, 255, 255, 192, 127, 128, 255, 126, 255, 63, 128, 255, 255, 255, 255, 192, 127, 255, 255, 192, 127, 128, 255, 126, 255, 192, 127, 63, 127, 63, 128, 255, 255, 128, 255, 126, 255, 192, 127, 63, 127, 192, 127, 63, 127, 63, 128, 255, 255, 255, 255, 192, 127),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray(2, 0, 11, 0, 8, 0, 2, 0, 5, 0, 11, 0, 6, 0, 23, 0, 19, 0, 6, 0, 10, 0, 23, 0, 18, 0, 15, 0, 12, 0, 18, 0, 21, 0, 15, 0, 13, 0, 4, 0, 0, 0, 13, 0, 17, 0, 4, 0, 7, 0, 14, 0, 1, 0, 7, 0, 20, 0, 14, 0, 22, 0, 3, 0, 16, 0, 22, 0, 9, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_1m2ha"),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(2.01173, 2.00394, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 253, 255, 255, 255, 0, 0, 0, 0, 253, 255, 108, 213, 0, 0, 0, 0, 253, 255, 255, 191, 0, 0, 255, 255, 253, 255, 84, 213, 0, 0, 255, 255, 253, 255, 255, 255, 0, 0, 255, 255, 253, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 255, 255, 0, 0, 107, 213, 0, 0, 255, 255, 0, 0, 40, 128, 0, 0, 255, 255, 0, 0, 255, 191, 255, 255, 0, 0, 253, 255, 255, 191, 255, 255, 0, 0, 253, 255, 255, 255, 255, 255, 0, 0, 253, 255, 84, 213, 255, 255, 255, 255, 253, 255, 255, 191, 255, 255, 255, 255, 253, 255, 60, 213, 255, 255, 255, 255, 253, 255, 255, 255, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 40, 128, 255, 255, 0, 0, 0, 0, 61, 213, 255, 255, 255, 255, 0, 0, 255, 191, 255, 255, 255, 255, 0, 0, 84, 213, 255, 255, 255, 255, 0, 0, 255, 127, 191, 127, 190, 255, 141, 170, 184, 170, 255, 127, 0, 0, 170, 42, 84, 213, 255, 127, 254, 255, 128, 127, 63, 0, 255, 127, 255, 127, 169, 170, 170, 170, 63, 128, 127, 0, 184, 42, 112, 213, 255, 255, 255, 255, 255, 127, 0, 0, 191, 127, 127, 255, 255, 127, 254, 255, 169, 170, 170, 170, 255, 127, 254, 255, 156, 42, 55, 213, 63, 128, 191, 255, 255, 127, 254, 255, 255, 127, 255, 127, 198, 170, 155, 170, 126, 128, 191, 255, 170, 42, 84, 213, 255, 127, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_tmqad")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vi5kp"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0dc1d"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="metal_crate" type="StaticBody3D"]
+collision_mask = 0
+script = ExtResource("1_kxnyh")
+
+[node name="Cube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("ArrayMesh_7lkkx")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_vi5kp")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_x4iy0")]
+collision_mask = 8
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_0dc1d")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.277275, 0)
+stream = ExtResource("4_608jk")
+volume_db = -15.0
+
+[editable path="Hitbox"]

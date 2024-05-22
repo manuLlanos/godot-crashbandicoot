@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2cipuoo2ko62"]
+
+[ext_resource type="Script" path="res://scenes/pickups/food-can.gd" id="1_6v46t"]
+[ext_resource type="PackedScene" uid="uid://ceb70jbsfwjfg" path="res://models/cat-food-can.glb" id="2_rp3b3"]
+[ext_resource type="AudioStream" uid="uid://xx4qe3pyso7v" path="res://sounds/pickup.wav" id="3_rfsm2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c88uw"]
+radius = 0.290124
+
+[node name="FoodCan" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_6v46t")
+
+[node name="cat-food-can" parent="." instance=ExtResource("2_rp3b3")]
+
+[node name="Can" parent="cat-food-can" index="0"]
+transform = Transform3D(0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, 0, 0.422278, 0)
+
+[node name="AnimationPlayer" parent="cat-food-can" index="1"]
+autoplay = "Float "
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.319244, 0)
+shape = SubResource("SphereShape3D_c88uw")
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_rfsm2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="PickupSound" to="." method="_on_pickup_sound_finished"]
+
+[editable path="cat-food-can"]

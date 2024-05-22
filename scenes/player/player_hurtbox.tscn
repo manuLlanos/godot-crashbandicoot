@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsm5w4t5pgfd5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v2w43"]
+height = 1.2
+
+[node name="PlayerHurtbox" type="Area3D"]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_v2w43")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

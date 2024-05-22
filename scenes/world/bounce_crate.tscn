@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://byek3htawv28c"]
+
+[ext_resource type="PackedScene" uid="uid://cxccv82y4il61" path="res://scenes/world/crate.tscn" id="1_1btkm"]
+[ext_resource type="Script" path="res://scenes/world/bounce_crate.gd" id="1_72734"]
+[ext_resource type="PackedScene" uid="uid://btr4r8nh313c8" path="res://models/bounce_wood_crate.glb" id="3_atysn"]
+
+[node name="BounceCrate" instance=ExtResource("1_1btkm")]
+script = ExtResource("1_72734")
+
+[node name="Cube" parent="." index="0" instance=ExtResource("3_atysn")]
+
+[editable path="Cube"]
+[editable path="Hitbox"]

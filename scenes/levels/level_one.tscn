@@ -1,0 +1,391 @@
+[gd_scene load_steps=19 format=3 uid="uid://cxmi4seawh0np"]
+
+[ext_resource type="PackedScene" uid="uid://bbu6au6yr22ad" path="res://scenes/levels/level.tscn" id="1_c6plu"]
+[ext_resource type="PackedScene" uid="uid://dcgttncvemyx4" path="res://scenes/world/moving_platform.tscn" id="2_qv3q5"]
+[ext_resource type="PackedScene" uid="uid://bo3ve2cgj4kkb" path="res://scenes/world/tnt.tscn" id="3_0gcgr"]
+[ext_resource type="PackedScene" uid="uid://bhf8hmmmtyyju" path="res://models/world_meshes/nature_level.gltf" id="3_7aq2h"]
+[ext_resource type="PackedScene" uid="uid://d4ibab6buwn52" path="res://scenes/enemies/turtle.tscn" id="3_aetop"]
+[ext_resource type="PackedScene" uid="uid://cakkl6vrkuam1" path="res://scenes/components/fall_kill_zone.tscn" id="3_pbanp"]
+[ext_resource type="PackedScene" uid="uid://dpdf6esqusuv3" path="res://scenes/world/wood_crate.tscn" id="4_7ltrh"]
+[ext_resource type="PackedScene" uid="uid://byek3htawv28c" path="res://scenes/world/bounce_crate.tscn" id="5_iqngq"]
+[ext_resource type="PackedScene" uid="uid://c5h6eydpsyd1n" path="res://scenes/world_danger/spear_trap.tscn" id="5_y13vw"]
+[ext_resource type="PackedScene" uid="uid://cdpdf7oxldm70" path="res://scenes/world/question_crate.tscn" id="7_drum2"]
+[ext_resource type="PackedScene" uid="uid://bqmr7k0c3lq37" path="res://scenes/pickups/life.tscn" id="9_yenh1"]
+[ext_resource type="PackedScene" uid="uid://ct1rllmu4n3jw" path="res://scenes/world/metal_crate.tscn" id="12_q7mq7"]
+[ext_resource type="PackedScene" uid="uid://cq7desf6kmmg3" path="res://scenes/world/crystal.tscn" id="13_xl08n"]
+
+[sub_resource type="Environment" id="Environment_cxuom"]
+background_mode = 1
+background_color = Color(0.631373, 0.752941, 1, 1)
+background_energy_multiplier = 1.1
+sky_rotation = Vector3(-0.0785398, 0, 0)
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.0
+glow_enabled = true
+fog_light_color = Color(0.709804, 0.737255, 0.780392, 1)
+fog_sky_affect = 0.0
+
+[sub_resource type="Curve3D" id="Curve3D_bi2pk"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -1.49999, 0, 0, 0, 0, 0, 0, 8.25, -0.25, -1.24999),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eynbr"]
+size = Vector3(6.5, 3.75, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_epqap"]
+size = Vector3(128.75, 3.75, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qgl3l"]
+size = Vector3(8, 1, 29)
+
+[node name="LevelOne" instance=ExtResource("1_c6plu")]
+
+[node name="TeleporterExit" parent="." index="2"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.249988, 0, -143.913)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="4"]
+environment = SubResource("Environment_cxuom")
+
+[node name="WorldMeshes" parent="." index="8"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="nature_level" parent="WorldMeshes" index="0" instance=ExtResource("3_7aq2h")]
+
+[node name="MovingPlatform" parent="WorldMeshes" index="1" instance=ExtResource("2_qv3q5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -136, 0, 1.5)
+
+[node name="Platform" parent="WorldMeshes/MovingPlatform" index="0"]
+transform = Transform3D(-0.030289, 0.0302614, -0.999083, -1.86264e-09, 0.999542, 0.0302752, 0.999541, 0.000917009, -0.0302751, 0, 0, -1.49999)
+
+[node name="Path3D" parent="WorldMeshes/MovingPlatform" index="1"]
+curve = SubResource("Curve3D_bi2pk")
+
+[node name="PathFollow3D" parent="WorldMeshes/MovingPlatform/Path3D" index="0"]
+transform = Transform3D(-0.030289, 0.0302614, -0.999083, -1.86264e-09, 0.999542, 0.0302752, 0.999541, 0.000917009, -0.0302751, 0, 0, -1.49999)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldBoundaries" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.375, -0.5)
+shape = SubResource("BoxShape3D_eynbr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="WorldBoundaries" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.5, 0, -1.25)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.125, 1.375, 7.15256e-07)
+shape = SubResource("BoxShape3D_epqap")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="WorldBoundaries" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.5, 0, -1.25)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundaries/StaticBody3D3" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.125, 1.375, 7.15256e-07)
+shape = SubResource("BoxShape3D_epqap")
+
+[node name="Turtle" parent="Enemies" index="0" instance=ExtResource("3_aetop")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.468581, 0, -6.73316)
+
+[node name="Turtle2" parent="Enemies" index="1" instance=ExtResource("3_aetop")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.28142, 0, -15.4832)
+
+[node name="Turtle3" parent="Enemies" index="2" instance=ExtResource("3_aetop")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 1.71858, 0, -40.9832)
+
+[node name="Turtle4" parent="Enemies" index="3" instance=ExtResource("3_aetop")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.78142, 0, -65.2332)
+
+[node name="Turtle5" parent="Enemies" index="4" instance=ExtResource("3_aetop")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.46858, 0, -61.4832)
+max_distance = 2.0
+
+[node name="Turtle6" parent="Enemies" index="5" instance=ExtResource("3_aetop")]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -0.0314178, 0, -116.483)
+max_distance = 2.0
+
+[node name="Turtle7" parent="Enemies" index="6" instance=ExtResource("3_aetop")]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -0.0314178, 0, -111.983)
+max_distance = 2.0
+
+[node name="Turtle8" parent="Enemies" index="7" instance=ExtResource("3_aetop")]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -0.0314178, 0, -108.233)
+max_distance = 2.0
+
+[node name="FallKillZone" parent="Hazards" index="0" instance=ExtResource("3_pbanp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.10738, -11.509)
+
+[node name="FallKillZone2" parent="Hazards" index="1" instance=ExtResource("3_pbanp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.10738, -32.509)
+
+[node name="FallKillZone3" parent="Hazards" index="2" instance=ExtResource("3_pbanp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.10738, -49.759)
+
+[node name="FallKillZone4" parent="Hazards" index="3" instance=ExtResource("3_pbanp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.10738, -62.009)
+
+[node name="FallKillZone5" parent="Hazards" index="4" instance=ExtResource("3_pbanp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.10738, -85.509)
+
+[node name="CollisionShape3D" parent="Hazards/FallKillZone5" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+shape = SubResource("BoxShape3D_qgl3l")
+
+[node name="FallKillZone6" parent="Hazards" index="5" instance=ExtResource("3_pbanp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.10738, -131.509)
+
+[node name="CollisionShape3D" parent="Hazards/FallKillZone6" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0)
+
+[node name="SpearTrap" parent="Hazards" index="6" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -46.75)
+
+[node name="SpearTrap12" parent="Hazards" index="7" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -86.75)
+attack_wait_time = 0.5
+
+[node name="SpearTrap15" parent="Hazards" index="8" instance=ExtResource("5_y13vw")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0.323223, 0.25, -91.8661)
+attack_wait_time = 0.5
+start_delay = 0.5
+
+[node name="SpearTrap16" parent="Hazards" index="9" instance=ExtResource("5_y13vw")]
+transform = Transform3D(0.953879, -0.11519, -0.277212, 0.12941, 0.991025, 0.0334936, 0.270866, -0.0678228, 0.960225, 1.46062, -0.146898, -93.7926)
+attack_wait_time = 0.5
+start_delay = 0.75
+
+[node name="SpearTrap17" parent="Hazards" index="10" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0.0499995, 5.36442e-07, -119.25)
+attack_wait_time = 3.0
+
+[node name="SpearTrap18" parent="Hazards" index="11" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0.0499995, 5.36442e-07, -120)
+attack_wait_time = 3.0
+start_delay = 2.0
+
+[node name="SpearTrap20" parent="Hazards" index="12" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0.0499995, 5.36442e-07, -121.5)
+attack_wait_time = 3.0
+start_delay = 2.0
+
+[node name="SpearTrap19" parent="Hazards" index="13" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0.0499995, 5.36442e-07, -120.75)
+attack_wait_time = 3.0
+
+[node name="SpearTrap14" parent="Hazards" index="14" instance=ExtResource("5_y13vw")]
+transform = Transform3D(0.720311, -0.0509041, -0.691781, -0.169965, 0.953949, -0.247171, 0.672505, 0.295618, 0.678488, -0.195263, 0.129707, -91.3426)
+attack_wait_time = 0.5
+
+[node name="SpearTrap13" parent="Hazards" index="15" instance=ExtResource("5_y13vw")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.75, 0, -88.25)
+attack_wait_time = 0.5
+start_delay = 0.5
+
+[node name="SpearTrap2" parent="Hazards" index="16" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -46.75)
+start_delay = 1.0
+
+[node name="SpearTrap3" parent="Hazards" index="17" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -46.75)
+start_delay = 2.0
+
+[node name="SpearTrap4" parent="Hazards" index="18" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -46.75)
+start_delay = 3.0
+
+[node name="SpearTrap5" parent="Hazards" index="19" instance=ExtResource("5_y13vw")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -3.25, 0.5, -58.5)
+attack_wait_time = 1.0
+
+[node name="SpearTrap7" parent="Hazards" index="20" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 5.96046e-08, 0, -5.96046e-08, 1, 0, 0, 0, 1, -1.75, 0, -58.5)
+attack_wait_time = 1.0
+start_delay = 1.0
+
+[node name="SpearTrap8" parent="Hazards" index="21" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 5.96046e-08, 0, -5.96046e-08, 1, 0, 0, 0, 1, -1, -4.47035e-08, -58.5)
+attack_wait_time = 1.0
+start_delay = 1.0
+
+[node name="SpearTrap9" parent="Hazards" index="22" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 5.96046e-08, 0, -5.96046e-08, 1, 0, 0, 0, 1, -0.25, -8.9407e-08, -58.5)
+attack_wait_time = 1.0
+start_delay = 1.0
+
+[node name="SpearTrap10" parent="Hazards" index="23" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 5.96046e-08, 0, -5.96046e-08, 1, 0, 0, 0, 1, 0.5, -1.3411e-07, -58.5)
+attack_wait_time = 1.0
+start_delay = 1.0
+
+[node name="SpearTrap11" parent="Hazards" index="24" instance=ExtResource("5_y13vw")]
+transform = Transform3D(1, 5.96046e-08, 0, -5.96046e-08, 1, 0, 0, 0, 1, 1.25, -1.78814e-07, -58.5)
+attack_wait_time = 1.0
+start_delay = 1.0
+
+[node name="SpearTrap6" parent="Hazards" index="25" instance=ExtResource("5_y13vw")]
+transform = Transform3D(-0.258819, -0.965926, -8.9407e-08, -0.965926, 0.258819, 3.55271e-15, 2.31402e-08, 8.63605e-08, -1, 2.35, 0.5, -58.25)
+attack_wait_time = 1.0
+
+[node name="wood_crate" parent="CratesAndPickups" index="0" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, -0.75)
+
+[node name="wood_crate6" parent="CratesAndPickups" index="1" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -0.25, -21.25)
+
+[node name="wood_crate13" parent="CratesAndPickups" index="2" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -27)
+
+[node name="wood_crate18" parent="CratesAndPickups" index="3" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, -27)
+
+[node name="wood_crate9" parent="CratesAndPickups" index="4" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, -0.25, -21.25)
+
+[node name="wood_crate10" parent="CratesAndPickups" index="5" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.25, -21.25)
+
+[node name="wood_crate11" parent="CratesAndPickups" index="6" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.25, -21.25)
+
+[node name="wood_crate12" parent="CratesAndPickups" index="7" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0.25, -21.25)
+
+[node name="wood_crate14" parent="CratesAndPickups" index="8" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.75, -21.25)
+
+[node name="wood_crate15" parent="CratesAndPickups" index="9" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.75, -21.25)
+
+[node name="wood_crate16" parent="CratesAndPickups" index="10" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.75, -21.25)
+
+[node name="wood_crate17" parent="CratesAndPickups" index="11" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0.75, -21.25)
+
+[node name="wood_crate7" parent="CratesAndPickups" index="12" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.25, -21.25)
+
+[node name="wood_crate8" parent="CratesAndPickups" index="13" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, -0.25, -21.25)
+
+[node name="wood_crate19" parent="CratesAndPickups" index="14" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, -41.75)
+
+[node name="wood_crate20" parent="CratesAndPickups" index="15" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, -47.5)
+
+[node name="wood_crate21" parent="CratesAndPickups" index="16" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, -48)
+
+[node name="wood_crate26" parent="CratesAndPickups" index="17" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.5, -55)
+
+[node name="wood_crate22" parent="CratesAndPickups" index="18" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75, 0, -48)
+
+[node name="wood_crate23" parent="CratesAndPickups" index="19" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -70)
+
+[node name="wood_crate24" parent="CratesAndPickups" index="20" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -69.5)
+
+[node name="wood_crate25" parent="CratesAndPickups" index="21" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -69.5)
+
+[node name="wood_crate27" parent="CratesAndPickups" index="22" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -106.25)
+
+[node name="wood_crate29" parent="CratesAndPickups" index="23" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -106.25)
+
+[node name="wood_crate30" parent="CratesAndPickups" index="24" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -106.75)
+
+[node name="wood_crate31" parent="CratesAndPickups" index="25" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -106.75)
+
+[node name="wood_crate32" parent="CratesAndPickups" index="26" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -106.75)
+
+[node name="wood_crate28" parent="CratesAndPickups" index="27" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -106.25)
+
+[node name="wood_crate2" parent="CratesAndPickups" index="28" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, -0.75)
+
+[node name="wood_crate3" parent="CratesAndPickups" index="29" instance=ExtResource("4_7ltrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, -0.25)
+
+[node name="QuestionCrate5" parent="CratesAndPickups" index="30" instance=ExtResource("7_drum2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.25, -21.25)
+
+[node name="QuestionCrate6" parent="CratesAndPickups" index="31" instance=ExtResource("7_drum2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0.25, -40.5)
+
+[node name="QuestionCrate8" parent="CratesAndPickups" index="32" instance=ExtResource("7_drum2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2, -66.5)
+
+[node name="QuestionCrate7" parent="CratesAndPickups" index="33" instance=ExtResource("7_drum2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 0, -88)
+
+[node name="QuestionCrate10" parent="CratesAndPickups" index="34" instance=ExtResource("7_drum2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -115.25)
+
+[node name="QuestionCrate9" parent="CratesAndPickups" index="35" instance=ExtResource("7_drum2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -80.25)
+
+[node name="BounceCrate" parent="CratesAndPickups" index="36" instance=ExtResource("5_iqngq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, -0.75)
+
+[node name="BounceCrate5" parent="CratesAndPickups" index="37" instance=ExtResource("5_iqngq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0, -111)
+
+[node name="BounceCrate6" parent="CratesAndPickups" index="38" instance=ExtResource("5_iqngq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 2, -111)
+
+[node name="BounceCrate3" parent="CratesAndPickups" index="39" instance=ExtResource("5_iqngq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, -27)
+
+[node name="BounceCrate4" parent="CratesAndPickups" index="40" instance=ExtResource("5_iqngq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -66.5)
+
+[node name="BounceCrate2" parent="CratesAndPickups" index="41" instance=ExtResource("5_iqngq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 2, -0.75)
+
+[node name="Life" parent="CratesAndPickups" index="42" instance=ExtResource("9_yenh1")]
+transform = Transform3D(4.4, 0, 0, 0, 4.4, 0, 0, 0, 4.4, -2.2, 0, -89.1)
+
+[node name="metal_crate" parent="CratesAndPickups" index="43" instance=ExtResource("12_q7mq7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -70)
+
+[node name="TNT" parent="CratesAndPickups" index="44" instance=ExtResource("3_0gcgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, -55)
+
+[node name="TNT5" parent="CratesAndPickups" index="45" instance=ExtResource("3_0gcgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -115.75)
+
+[node name="TNT6" parent="CratesAndPickups" index="46" instance=ExtResource("3_0gcgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -110.75)
+
+[node name="TNT2" parent="CratesAndPickups" index="47" instance=ExtResource("3_0gcgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -78.25)
+
+[node name="TNT3" parent="CratesAndPickups" index="48" instance=ExtResource("3_0gcgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -80.25)
+
+[node name="TNT4" parent="CratesAndPickups" index="49" instance=ExtResource("3_0gcgr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -80.25)
+
+[node name="Crystal" parent="." index="14" instance=ExtResource("13_xl08n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, -141.25)
+
+[editable path="WorldMeshes/MovingPlatform"]
+[editable path="Hazards/FallKillZone5"]
+[editable path="Hazards/FallKillZone6"]

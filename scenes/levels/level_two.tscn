@@ -1,0 +1,100 @@
+[gd_scene load_steps=9 format=3 uid="uid://8767gy57yeli"]
+
+[ext_resource type="PackedScene" uid="uid://bbu6au6yr22ad" path="res://scenes/levels/level.tscn" id="1_egt6m"]
+[ext_resource type="PackedScene" uid="uid://cslh37hryn86h" path="res://models/world_meshes/nature_level2.gltf" id="2_6rn2c"]
+[ext_resource type="PackedScene" uid="uid://bj7jnl1qnbmvw" path="res://scenes/components/camera_swap_trigger.tscn" id="3_aroqs"]
+[ext_resource type="PackedScene" uid="uid://dcgttncvemyx4" path="res://scenes/world/moving_platform.tscn" id="4_5pjtc"]
+
+[sub_resource type="Environment" id="Environment_wa5s7"]
+background_mode = 1
+background_color = Color(0.631373, 0.752941, 1, 1)
+background_energy_multiplier = 1.1
+sky_rotation = Vector3(-0.0785398, 0, 0)
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.0
+glow_enabled = true
+fog_light_color = Color(0.709804, 0.737255, 0.780392, 1)
+fog_sky_affect = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ugymw"]
+size = Vector3(3, 2.75, 1)
+
+[sub_resource type="Curve3D" id="Curve3D_2rxo4"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.50061, -0.25, -1.24976, 0, 0, 0, 0, 0, 0, 5.74939, -0.249998, -1.25281),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_dxkyk"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.75061, 1.19209e-07, -1.24963, 0, 0, 0, 0, 0, 0, 4.74939, 1.54972e-06, -1.25232),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="LevelTwo" instance=ExtResource("1_egt6m")]
+
+[node name="Player" parent="." index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.74846e-07, 1.14591, -2.25)
+
+[node name="PlayerCamera" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 0.908508, 0.417868, 0, -0.417868, 0.908508, 0, 2.82274, 2.51152)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="7"]
+environment = SubResource("Environment_wa5s7")
+
+[node name="nature_level2" parent="WorldMeshes" index="0" instance=ExtResource("2_6rn2c")]
+
+[node name="CameraSwapTrigger" parent="WorldMeshes" index="1" instance=ExtResource("3_aroqs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+state = 1
+
+[node name="CollisionShape3D" parent="WorldMeshes/CameraSwapTrigger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0.5)
+shape = SubResource("BoxShape3D_ugymw")
+
+[node name="MovingPlatform" parent="WorldMeshes" index="2" instance=ExtResource("4_5pjtc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0.75, 0.5)
+
+[node name="Platform" parent="WorldMeshes/MovingPlatform" index="0"]
+transform = Transform3D(-6.92875e-07, -6.66879e-08, -1, 2.95838e-07, 1, -6.66875e-08, 1, -2.95838e-07, -6.92875e-07, -0.5, -0.25, -4.64916e-06)
+
+[node name="Path3D" parent="WorldMeshes/MovingPlatform" index="1"]
+transform = Transform3D(1, 2.52793e-07, -0.000488692, -2.52649e-07, 1, 2.95961e-07, 0.000488692, -2.95838e-07, 1, 0, 0, 1.25)
+curve = SubResource("Curve3D_2rxo4")
+
+[node name="PathFollow3D" parent="WorldMeshes/MovingPlatform/Path3D" index="0"]
+transform = Transform3D(0.000487999, -3.19481e-07, -1, 2.84217e-14, 1, -3.19481e-07, 1, 1.55878e-10, 0.000487999, -0.50061, -0.25, -1.24976)
+
+[node name="MovingPlatform2" parent="WorldMeshes" index="3" instance=ExtResource("4_5pjtc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 1.75, 0.5)
+
+[node name="Platform" parent="WorldMeshes/MovingPlatform2" index="0"]
+transform = Transform3D(4.99247e-07, -7.29989e-09, -1, 2.95837e-07, 1, -7.29912e-09, 1, -2.95838e-07, 4.99247e-07, -0.75, -1.19209e-07, 3.21865e-06)
+
+[node name="Path3D" parent="WorldMeshes/MovingPlatform2" index="1"]
+transform = Transform3D(1, 2.52793e-07, -0.000488692, -2.52649e-07, 1, 2.95961e-07, 0.000488692, -2.95838e-07, 1, 0, 0, 1.25)
+curve = SubResource("Curve3D_dxkyk")
+
+[node name="PathFollow3D" parent="WorldMeshes/MovingPlatform2/Path3D" index="0"]
+transform = Transform3D(0.000489191, -2.60093e-07, -1, 1.42109e-14, 1, -2.60093e-07, 1, 1.27221e-10, 0.000489191, -0.75061, 1.19209e-07, -1.24963)
+
+[node name="MovingPlatform3" parent="WorldMeshes" index="4" instance=ExtResource("4_5pjtc")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 81.5, 1.75, 0.5)
+
+[node name="Platform" parent="WorldMeshes/MovingPlatform3" index="0"]
+transform = Transform3D(4.99242e-07, -7.29989e-09, -1, 2.95837e-07, 1, -7.29912e-09, 1, -2.95838e-07, 4.99242e-07, -0.75, -1.19209e-07, 3.15905e-06)
+
+[node name="Path3D" parent="WorldMeshes/MovingPlatform3" index="1"]
+transform = Transform3D(1, 2.52793e-07, -0.000488692, -2.52649e-07, 1, 2.95961e-07, 0.000488692, -2.95838e-07, 1, 0, 0, 1.25)
+curve = SubResource("Curve3D_dxkyk")
+
+[node name="PathFollow3D" parent="WorldMeshes/MovingPlatform3/Path3D" index="0"]
+transform = Transform3D(0.000489191, -2.60093e-07, -1, 1.42109e-14, 1, -2.60093e-07, 1, 1.27221e-10, 0.000489191, -0.75061, 1.19209e-07, -1.24963)
+
+[editable path="WorldMeshes/CameraSwapTrigger"]
+[editable path="WorldMeshes/MovingPlatform"]
+[editable path="WorldMeshes/MovingPlatform2"]
+[editable path="WorldMeshes/MovingPlatform3"]

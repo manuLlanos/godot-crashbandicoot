@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmwy58p8ikwkk"]
+
+[ext_resource type="PackedScene" uid="uid://bjbfq3ml4hk6r" path="res://models/lowpoly_cat.glb" id="1_vodrb"]
+[ext_resource type="Texture2D" uid="uid://1uhbaph35lnn" path="res://models/lowpoly_cat_cat_texture_256.png" id="2_674y5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kocxo"]
+resource_name = "Material"
+transparency = 2
+alpha_scissor_threshold = 0.04
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("2_674y5")
+texture_filter = 2
+
+[node name="lowpoly_cat" instance=ExtResource("1_vodrb")]
+
+[node name="Cat_001" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(6.47685, -3.55271e-15, 2.27374e-13, -2.74447e-13, 6.47685, 5.84871e-07, 0, -5.88596e-07, 6.47685, 1.49328e-14, 1.90735e-06, 6.89179e-08)
+
+[node name="Cat_001" parent="Armature/Skeleton3D/Cat_001" index="0"]
+material_override = SubResource("StandardMaterial3D_kocxo")
+
+[node name="Cat_002" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(6.47685, -3.55271e-15, 1.13687e-13, -2.70006e-13, 6.47685, 5.66244e-07, 2.27374e-13, -5.66244e-07, 6.47685, 1.41097e-14, 0, 7.63685e-08)
+
+[node name="Cat_005" parent="Armature/Skeleton3D" index="2"]
+transform = Transform3D(6.47685, -1.96695e-06, 4.76837e-07, 2.08616e-06, 6.47685, 8.34465e-07, 7.15256e-07, -1.66893e-06, 6.47685, 7.15256e-07, 2.38419e-07, -5.96046e-08)
+
+[node name="Cat_007" parent="Armature/Skeleton3D" index="3"]
+transform = Transform3D(6.47685, 1.93715e-06, -2.38419e-07, -9.83477e-07, 6.47685, 2.38419e-07, -1.19209e-07, -7.15256e-07, 6.47685, -1.66893e-06, -1.43051e-06, 1.93715e-07)
+
+[node name="Cat" parent="Armature/Skeleton3D" index="4"]
+transform = Transform3D(6.47685, 1.05879e-22, -4.23516e-22, -5.02926e-22, 6.47685, 0, -5.29396e-23, 0, 6.47685, -9.92617e-24, 9.53674e-07, -1.19209e-07)
+
+[node name="Cat_010" parent="Armature/Skeleton3D" index="5"]
+transform = Transform3D(6.47686, -3.57628e-07, -9.53674e-07, -5.66244e-07, 6.47685, 5.24521e-06, 5.1409e-07, 2.38419e-06, 6.47686, 1.19209e-07, 2.98023e-07, -8.9407e-08)
+
+[node name="Cat_012" parent="Armature/Skeleton3D" index="6"]
+transform = Transform3D(6.47686, 3.57628e-07, 9.53674e-07, 5.66244e-07, 6.47685, 5.24521e-06, -5.1409e-07, 2.38419e-06, 6.47686, 5.96046e-08, 2.98023e-07, -8.9407e-08)

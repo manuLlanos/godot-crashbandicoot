@@ -1,0 +1,273 @@
+[gd_scene load_steps=14 format=3 uid="uid://dojokaqq3vasw"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_fmnnw"]
+[ext_resource type="PackedScene" uid="uid://bmwy58p8ikwkk" path="res://scenes/player/lowpoly_cat.tscn" id="2_cfnjd"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_o4j62"]
+[ext_resource type="PackedScene" uid="uid://8nljmsm152sj" path="res://scenes/components/hitbox.tscn" id="4_cc6gs"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_ve2yw"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_hmyfk"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_x1ead"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_is_active_guard.gd" id="8_2kj7g"]
+[ext_resource type="PackedScene" uid="uid://bsm5w4t5pgfd5" path="res://scenes/player/player_hurtbox.tscn" id="9_cb7xj"]
+[ext_resource type="Texture2D" uid="uid://bhhdmdcstvm15" path="res://textures/circle_120x120.png" id="10_gfmsv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lds05"]
+radius = 0.2
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ufyca"]
+height = 0.968431
+radius = 0.20759
+
+[sub_resource type="Resource" id="Resource_mhic6"]
+script = ExtResource("8_2kj7g")
+state = NodePath("../../../Status/Alive")
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 37
+script = ExtResource("1_fmnnw")
+
+[node name="lowpoly_cat" parent="." instance=ExtResource("2_cfnjd")]
+unique_name_in_owner = true
+
+[node name="Skeleton3D" parent="lowpoly_cat/Armature" index="0"]
+bones/1/position = Vector3(-2.6893e-17, 1.89701, 0.0544535)
+bones/1/rotation = Quaternion(-0.186905, 7.76272e-17, 7.76272e-17, 0.982378)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(-0.0748908, 2.37749e-07, 3.56272e-15, 0.997192)
+bones/4/rotation = Quaternion(-0.0222734, 1.06747e-14, -5.31038e-09, 0.999752)
+bones/6/rotation = Quaternion(0.00390616, -1.19208e-07, 4.6565e-10, 0.999992)
+bones/6/scale = Vector3(6.47685, 6.47685, 6.47685)
+bones/7/rotation = Quaternion(0.0140889, -1.19197e-07, 1.67953e-09, 0.999901)
+bones/7/scale = Vector3(6.47685, 6.47685, 6.47685)
+bones/9/position = Vector3(1.25196, 1.71289, 0.40799)
+bones/9/rotation = Quaternion(0.100962, -0.441388, 0.206009, 0.867492)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/position = Vector3(9.16005e-05, 2.35493e-05, -5.86937e-05)
+bones/10/rotation = Quaternion(0.00489304, -0.0248268, -0.730307, 0.68265)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.0546323, 0.166076, 0.930902, 0.320711)
+bones/11/scale = Vector3(6.47685, 6.47685, 6.47685)
+bones/12/rotation = Quaternion(-0.186073, -0.0279185, -0.35868, 0.914301)
+bones/13/rotation = Quaternion(0.561617, 0.0178686, -0.188518, 0.805437)
+bones/14/position = Vector3(0.685383, 1.4663, 1.15783)
+bones/14/rotation = Quaternion(0.738101, -0.162831, -0.202602, 0.622612)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/position = Vector3(-1.25196, 1.71289, 0.40799)
+bones/16/rotation = Quaternion(0.100962, 0.441388, -0.206009, 0.867493)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/position = Vector3(-9.08136e-05, 2.35233e-05, -5.82893e-05)
+bones/17/rotation = Quaternion(0.00489299, 0.0248269, 0.730307, 0.68265)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(0.0546323, 0.166076, 0.930902, -0.320711)
+bones/18/scale = Vector3(6.47685, 6.47685, 6.47685)
+bones/19/rotation = Quaternion(-0.186073, 0.0279185, 0.35868, 0.914301)
+bones/20/rotation = Quaternion(0.561617, -0.0178686, 0.188518, 0.805436)
+bones/21/position = Vector3(-0.685383, 1.4663, 1.15783)
+bones/21/rotation = Quaternion(0.738101, 0.162831, 0.202602, 0.622612)
+bones/22/rotation = Quaternion(-0.0174413, -0.00928162, 0.999064, -0.0384917)
+bones/22/scale = Vector3(1.00003, 1, 1)
+bones/23/rotation = Quaternion(-0.215376, 0.000545106, -0.00924259, 0.976487)
+bones/23/scale = Vector3(1, 1, 1)
+bones/24/rotation = Quaternion(-0.023287, 0.826099, -0.562002, 0.03423)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/rotation = Quaternion(0.0174413, -0.00928162, 0.999064, 0.0384917)
+bones/25/scale = Vector3(1.00003, 1, 1)
+bones/26/rotation = Quaternion(-0.215376, -0.000545107, 0.00924259, 0.976487)
+bones/26/scale = Vector3(1, 1, 1)
+bones/27/rotation = Quaternion(0.023287, 0.826099, -0.562002, -0.03423)
+bones/27/scale = Vector3(1, 1, 1)
+bones/28/rotation = Quaternion(0.916112, -1.33113e-16, -1.6866e-17, -0.400922)
+bones/28/scale = Vector3(1, 1, 1)
+bones/29/rotation = Quaternion(0.974903, -9.3927e-17, -9.3927e-17, 0.222631)
+bones/29/scale = Vector3(6.47685, 6.47685, 6.47685)
+bones/30/position = Vector3(0.538486, 0.385433, 0.30056)
+bones/30/rotation = Quaternion(0.0217667, -0.706772, 0.706772, -0.0217667)
+bones/30/scale = Vector3(1, 1, 1)
+bones/31/position = Vector3(2.98283e-07, 2.11132e-07, 4.76508e-07)
+bones/31/rotation = Quaternion(0.98006, 0.0107223, -0.00739872, 0.198272)
+bones/31/scale = Vector3(1, 1, 1)
+bones/33/position = Vector3(-0.538486, 0.385433, 0.30056)
+bones/33/rotation = Quaternion(-0.0217667, -0.706772, 0.706772, 0.0217667)
+bones/33/scale = Vector3(1, 1, 1)
+bones/34/rotation = Quaternion(0.98006, -0.0107223, 0.00739872, 0.198272)
+bones/34/scale = Vector3(1, 1, 1)
+bones/35/rotation = Quaternion(0.019366, 0.552473, 0.833207, -0.012841)
+
+[node name="Cat_001" parent="lowpoly_cat/Armature/Skeleton3D" index="0"]
+transform = Transform3D(6.47685, -2.13163e-14, 2.95586e-12, -1.52767e-13, 6.47685, -1.3113e-06, -3.06954e-12, 1.2964e-06, 6.47685, 5.77103e-14, -1.43051e-06, -2.1141e-07)
+
+[node name="Cat_002" parent="lowpoly_cat/Armature/Skeleton3D" index="1"]
+transform = Transform3D(6.47685, 1.06581e-14, 5.00222e-12, -1.84741e-13, 6.47685, -6.70552e-07, -5.00222e-12, 6.85453e-07, 6.47685, 5.61345e-14, -3.33786e-06, -2.10479e-07)
+
+[node name="Cat_005" parent="lowpoly_cat/Armature/Skeleton3D" index="2"]
+transform = Transform3D(5.88395, 2.70716, -1.60933e-06, -2.25692, 4.90537, 3.57677, 1.495, -3.24935, 5.39966, -1.50547, 1.19445, 0.678998)
+
+[node name="Cat_007" parent="lowpoly_cat/Armature/Skeleton3D" index="3"]
+transform = Transform3D(5.88395, -2.70716, -1.01328e-06, 2.25692, 4.90537, 3.57677, -1.495, -3.24934, 5.39966, 1.50548, 1.19446, 0.678999)
+
+[node name="Cat" parent="lowpoly_cat/Armature/Skeleton3D" index="4"]
+transform = Transform3D(6.47685, -9.79382e-22, -3.70577e-22, 9.79382e-22, 6.47685, -1.43051e-06, 3.70577e-22, 1.43051e-06, 6.47685, 4.21862e-22, -1.90735e-06, 8.34465e-07)
+
+[node name="Cat_010" parent="lowpoly_cat/Armature/Skeleton3D" index="5"]
+transform = Transform3D(6.47686, 8.34465e-07, -2.98023e-07, -8.34465e-07, 6.47684, 2.38419e-06, 2.98023e-07, -1.66893e-06, 6.47685, -2.98023e-07, 5.06639e-07, 3.27826e-07)
+
+[node name="Cat_012" parent="lowpoly_cat/Armature/Skeleton3D" index="6"]
+transform = Transform3D(6.47686, -6.85453e-07, -2.23517e-08, 6.55651e-07, 6.47684, 9.05991e-06, 2.98023e-08, -9.05991e-06, 6.47685, 1.78814e-07, 9.83477e-07, 5.06639e-07)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.0339607)
+shape = SubResource("CapsuleShape3D_lds05")
+
+[node name="PlayerHurtbox" parent="." instance=ExtResource("9_cb7xj")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Hitbox" parent="." instance=ExtResource("4_cc6gs")]
+collision_mask = 16
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49143, 0.0396938)
+shape = SubResource("CylinderShape3D_ufyca")
+
+[node name="StateChart" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_o4j62")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("5_ve2yw")
+initial_state = NodePath("Grounded")
+
+[node name="Grounded" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_hmyfk")
+
+[node name="on Jump" type="Node" parent="StateChart/Root/Grounded"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Jumped")
+event = &"jumped"
+
+[node name="on LeftGround" type="Node" parent="StateChart/Root/Grounded"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../OnAirCanJump")
+event = &"left_ground"
+
+[node name="on Spin" type="Node" parent="StateChart/Root/Grounded"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Spinning")
+event = &"attack"
+
+[node name="on Death" type="Node" parent="StateChart/Root/Grounded"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Dead")
+event = &"death"
+
+[node name="OnAirCanJump" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_hmyfk")
+
+[node name="on Coyote Timeout" type="Node" parent="StateChart/Root/OnAirCanJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../OnAirCannotJump")
+delay_seconds = 0.2
+
+[node name="on Jump" type="Node" parent="StateChart/Root/OnAirCanJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Jumped")
+event = &"jumped"
+
+[node name="on Landed" type="Node" parent="StateChart/Root/OnAirCanJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Grounded")
+event = &"grounded"
+
+[node name="on Spin" type="Node" parent="StateChart/Root/OnAirCanJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Spinning")
+event = &"attack"
+
+[node name="on Death" type="Node" parent="StateChart/Root/OnAirCanJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Dead")
+event = &"death"
+
+[node name="Jumped" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_hmyfk")
+
+[node name="on Landed" type="Node" parent="StateChart/Root/Jumped"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Grounded")
+event = &"grounded"
+
+[node name="on Spin" type="Node" parent="StateChart/Root/Jumped"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Spinning")
+event = &"attack"
+
+[node name="on Velocity Change" type="Node" parent="StateChart/Root/Jumped"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../OnAirCannotJump")
+event = &"falling"
+
+[node name="on Death" type="Node" parent="StateChart/Root/Jumped"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Dead")
+event = &"death"
+
+[node name="OnAirCannotJump" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_hmyfk")
+
+[node name="on Landed" type="Node" parent="StateChart/Root/OnAirCannotJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Grounded")
+event = &"grounded"
+
+[node name="on Spin" type="Node" parent="StateChart/Root/OnAirCannotJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Spinning")
+event = &"attack"
+guard = SubResource("Resource_mhic6")
+
+[node name="on Death" type="Node" parent="StateChart/Root/OnAirCannotJump"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Dead")
+event = &"death"
+
+[node name="Spinning" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_hmyfk")
+
+[node name="on Spin End" type="Node" parent="StateChart/Root/Spinning"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../OnAirCannotJump")
+event = &"attack_finish"
+
+[node name="on Death" type="Node" parent="StateChart/Root/Spinning"]
+script = ExtResource("7_x1ead")
+to = NodePath("../../Dead")
+event = &"death"
+
+[node name="Dead" type="Node" parent="StateChart/Root"]
+script = ExtResource("6_hmyfk")
+
+[node name="ShadowDecal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.49965, 0)
+size = Vector3(0.7, 5, 0.7)
+texture_albedo = ExtResource("10_gfmsv")
+modulate = Color(0, 0, 0, 0.72549)
+upper_fade = 1.48728e-05
+lower_fade = 1.76868e-05
+
+[connection signal="animation_finished" from="lowpoly_cat/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="state_physics_processing" from="StateChart/Root/Grounded" to="." method="_on_grounded_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/OnAirCanJump" to="." method="_on_on_air_can_jump_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/OnAirCanJump" to="." method="_on_on_air_can_jump_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Jumped" to="." method="_on_jumped_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Jumped" to="." method="_on_jumped_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/OnAirCannotJump" to="." method="_on_on_air_cannot_jump_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/OnAirCannotJump" to="." method="_on_on_air_cannot_jump_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Spinning" to="." method="_on_spinning_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Spinning" to="." method="_on_spinning_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
+
+[editable path="lowpoly_cat"]
+[editable path="Hitbox"]

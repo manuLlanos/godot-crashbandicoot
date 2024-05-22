@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkdrxiwp1lqdl"]
+
+[ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_bqtcw"]
+[ext_resource type="Texture2D" uid="uid://sypaerrgx85d" path="res://textures/life-icon.png" id="1_i5fdg"]
+[ext_resource type="Texture2D" uid="uid://dbknp5sr2gya6" path="res://textures/cat-food-icon.png" id="2_qyyax"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_bqtcw")
+
+[node name="LivesContainer" type="MarginContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.05
+anchor_right = 0.1
+anchor_bottom = 0.05
+offset_right = 43.0
+offset_bottom = 64.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LivesContainer"]
+layout_mode = 2
+
+[node name="LivesIcon" type="TextureRect" parent="LivesContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_i5fdg")
+expand_mode = 3
+
+[node name="LivesLabel" type="Label" parent="LivesContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "x2"
+
+[node name="CansContainer" type="MarginContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.05
+anchor_right = 0.9
+anchor_bottom = 0.05
+offset_left = -82.0
+offset_bottom = 64.0
+grow_horizontal = 0
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CansContainer"]
+layout_mode = 2
+
+[node name="CansIcon" type="TextureRect" parent="CansContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_qyyax")
+expand_mode = 3
+
+[node name="CansLabel" type="Label" parent="CansContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
+
+[node name="CratesContainer" type="MarginContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.05
+anchor_right = 0.5
+anchor_bottom = 0.05
+offset_left = -53.5
+offset_right = 53.5
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CratesContainer"]
+layout_mode = 2
+
+[node name="CratesIcon" type="TextureRect" parent="CratesContainer/HBoxContainer"]
+layout_mode = 2
+expand_mode = 3
+
+[node name="CratesLabel" type="Label" parent="CratesContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0/??"
+horizontal_alignment = 2

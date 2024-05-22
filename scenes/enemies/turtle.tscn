@@ -1,0 +1,140 @@
+[gd_scene load_steps=13 format=3 uid="uid://d4ibab6buwn52"]
+
+[ext_resource type="Script" path="res://scenes/enemies/turtle.gd" id="1_0tbya"]
+[ext_resource type="PackedScene" uid="uid://jufa7wrfmop2" path="res://models/turtle.glb" id="1_masvb"]
+[ext_resource type="PackedScene" uid="uid://8nljmsm152sj" path="res://scenes/components/hitbox.tscn" id="2_b2xjb"]
+[ext_resource type="PackedScene" uid="uid://5s0dxmwxgnof" path="res://scenes/components/hurtbox.tscn" id="3_nnj1w"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_cgx25"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="6_ulqxj"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="7_d67m6"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="8_fbwdb"]
+[ext_resource type="AudioStream" uid="uid://qls0rwimm3xf" path="res://sounds/ricochet.wav" id="9_hj8t4"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yr616"]
+height = 0.439646
+radius = 0.482181
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fgsfm"]
+height = 0.480059
+radius = 0.623692
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ps70w"]
+height = 0.381478
+radius = 0.516613
+
+[node name="Turtle" type="CharacterBody3D" groups=["CanBounce", "Enemy"]]
+collision_layer = 32
+script = ExtResource("1_0tbya")
+
+[node name="turtle" parent="." instance=ExtResource("1_masvb")]
+unique_name_in_owner = true
+
+[node name="Skeleton3D" parent="turtle/Armature" index="0"]
+bones/0/rotation = Quaternion(-0.707107, 7.85046e-17, 7.85046e-17, 0.707107)
+bones/4/rotation = Quaternion(-0.125069, -1.458e-23, -2.77708e-17, 0.992148)
+bones/5/rotation = Quaternion(0.818047, 0.171341, 0.336401, -0.433907)
+bones/6/rotation = Quaternion(0.0246781, 0.0100072, 0.0238153, 0.999362)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(0.666851, 0.499311, 0.54818, 0.0741378)
+bones/8/rotation = Quaternion(-0.0300081, 0.00290436, 0.0343337, 0.998956)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(0.818047, -0.171341, -0.336401, -0.433907)
+bones/10/rotation = Quaternion(0.0246781, -0.0100072, -0.0238153, 0.999362)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(0.666851, -0.499311, -0.54818, 0.0741378)
+bones/12/rotation = Quaternion(-0.0300081, -0.00290436, -0.0343337, 0.998956)
+bones/12/scale = Vector3(1, 1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.224776, 0)
+shape = SubResource("CylinderShape3D_yr616")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_b2xjb")]
+unique_name_in_owner = true
+collision_mask = 8
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.220731, 0)
+shape = SubResource("CylinderShape3D_fgsfm")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_nnj1w")]
+unique_name_in_owner = true
+collision_layer = 16
+
+[node name="CollisionShape3D" parent="Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215331, 0)
+shape = SubResource("CylinderShape3D_ps70w")
+
+[node name="FlyHurtbox" parent="." instance=ExtResource("3_nnj1w")]
+unique_name_in_owner = true
+collision_layer = 8
+monitorable = false
+
+[node name="CollisionShape3D" parent="FlyHurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215331, 0)
+shape = SubResource("CylinderShape3D_ps70w")
+
+[node name="StateChart" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_cgx25")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("6_ulqxj")
+initial_state = NodePath("Walking")
+
+[node name="Walking" type="Node" parent="StateChart/Root"]
+script = ExtResource("7_d67m6")
+
+[node name="on Stomped" type="Node" parent="StateChart/Root/Walking"]
+script = ExtResource("8_fbwdb")
+to = NodePath("../../Stomped")
+event = &"stomped"
+
+[node name="on Death" type="Node" parent="StateChart/Root/Walking"]
+script = ExtResource("8_fbwdb")
+to = NodePath("../../Dead")
+event = &"death"
+
+[node name="Stomped" type="Node" parent="StateChart/Root"]
+script = ExtResource("7_d67m6")
+
+[node name="on LeftAlone" type="Node" parent="StateChart/Root/Stomped"]
+script = ExtResource("8_fbwdb")
+to = NodePath("../../Walking")
+event = &"left_alone"
+
+[node name="on Death" type="Node" parent="StateChart/Root/Stomped"]
+script = ExtResource("8_fbwdb")
+to = NodePath("../../Dead")
+event = &"death"
+
+[node name="Dead" type="Node" parent="StateChart/Root"]
+script = ExtResource("7_d67m6")
+
+[node name="StompedTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
+[node name="DeleteTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Sounds" type="Node3D" parent="."]
+
+[node name="Ricochet" type="AudioStreamPlayer3D" parent="Sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.222748, 0)
+stream = ExtResource("9_hj8t4")
+
+[connection signal="state_entered" from="StateChart/Root/Walking" to="." method="_on_walking_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Walking" to="." method="_on_walking_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Stomped" to="." method="_on_stomped_state_entered"]
+[connection signal="taken" from="StateChart/Root/Stomped/on LeftAlone" to="." method="_on_on_left_alone_taken"]
+[connection signal="state_entered" from="StateChart/Root/Dead" to="." method="_on_dead_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Dead" to="." method="_on_dead_state_physics_processing"]
+[connection signal="timeout" from="StompedTimer" to="." method="_on_stomped_timer_timeout"]
+[connection signal="timeout" from="DeleteTimer" to="." method="_on_delete_timer_timeout"]
+
+[editable path="turtle"]
+[editable path="Hitbox"]
+[editable path="Hurtbox"]
+[editable path="FlyHurtbox"]

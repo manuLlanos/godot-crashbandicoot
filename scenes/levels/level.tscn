@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=3 uid="uid://bbu6au6yr22ad"]
+
+[ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_e3bcg"]
+[ext_resource type="PackedScene" uid="uid://dojokaqq3vasw" path="res://scenes/player/player.tscn" id="1_exq5t"]
+[ext_resource type="PackedScene" uid="uid://bkdrxiwp1lqdl" path="res://scenes/ui/ui.tscn" id="1_tmkrg"]
+[ext_resource type="PackedScene" uid="uid://dgeqpx35a1fup" path="res://scenes/world/teleporter_exit.tscn" id="2_ast7a"]
+[ext_resource type="PackedScene" uid="uid://ctpsloiiuhlxc" path="res://scenes/components/player_camera.tscn" id="7_b00fw"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_kfqwa"]
+
+[sub_resource type="Animation" id="Animation_s8jqj"]
+resource_name = "FadeIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gjsvf"]
+resource_name = "FadeOut"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4uxwl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_388rb"]
+_data = {
+"FadeIn": SubResource("Animation_s8jqj"),
+"FadeOut": SubResource("Animation_gjsvf"),
+"RESET": SubResource("Animation_4uxwl")
+}
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_e3bcg")
+
+[node name="Fade" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(361.75, 263.25)
+scale = Vector2(724.5, 527.5)
+texture = SubResource("CanvasTexture_kfqwa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_388rb")
+}
+
+[node name="TeleporterExit" parent="." instance=ExtResource("2_ast7a")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -3.41289)
+
+[node name="UI" parent="." instance=ExtResource("1_tmkrg")]
+
+[node name="Player" parent="." instance=ExtResource("1_exq5t")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+wall_min_slide_angle = 0.349066
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_b00fw")]
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 2.5, 2)
+player = NodePath("../Player")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0237342, -0.499859, 0.865782, 0, 0.866026, 0.5, -0.999718, 0.0118671, -0.0205545, 0, 2.71604, 0)
+visible = false
+
+[node name="WorldMeshes" type="Node3D" parent="."]
+
+[node name="WorldBoundaries" type="Node3D" parent="."]
+
+[node name="BackgroundDecoration" type="Node3D" parent="."]
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="Hazards" type="Node3D" parent="."]
+
+[node name="CratesAndPickups" type="Node3D" parent="."]

@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqmr7k0c3lq37"]
+
+[ext_resource type="Texture2D" uid="uid://sypaerrgx85d" path="res://textures/life-icon.png" id="1_g314m"]
+[ext_resource type="Script" path="res://scenes/pickups/life.gd" id="1_vwygt"]
+[ext_resource type="AudioStream" uid="uid://cms6h3d7nf46h" path="res://sounds/bell.wav" id="3_v35mq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_25lul"]
+height = 0.153774
+radius = 0.0555912
+
+[sub_resource type="Animation" id="Animation_2w14j"]
+resource_name = "Float"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.0719816, 0), Vector3(0, 0.15, 0), Vector3(0, 0.0719816, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mew6h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.0719816, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3esvd"]
+_data = {
+"Float": SubResource("Animation_2w14j"),
+"RESET": SubResource("Animation_mew6h")
+}
+
+[node name="Life" type="Area3D"]
+transform = Transform3D(4.4, 0, 0, 0, 4.4, 0, 0, 0, 4.4, 0, 0, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_vwygt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1.45455, 0, 0, 0, 1.45455, 0, 0, 0, 1.45455, 0, 0.113729, 0)
+shape = SubResource("CylinderShape3D_25lul")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0719816, 0)
+visibility_range_end = 20.0
+pixel_size = 0.001
+billboard = 1
+texture = ExtResource("1_g314m")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3esvd")
+}
+autoplay = "Float"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_v35mq")
+max_polyphony = 5
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

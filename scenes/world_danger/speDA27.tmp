@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5h6eydpsyd1n"]
+
+[ext_resource type="PackedScene" uid="uid://b48bk07xaf7bl" path="res://models/speartrap.glb" id="1_2e6db"]
+[ext_resource type="Script" path="res://scenes/world_danger/spear_trap.gd" id="1_hkehq"]
+
+[node name="SpearTrap" type="Node3D"]
+script = ExtResource("1_hkehq")
+
+[node name="speartrap" parent="." instance=ExtResource("1_2e6db")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Spears" parent="speartrap" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.572149, 0)
+visible = false
+
+[node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[connection signal="animation_finished" from="speartrap/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+
+[editable path="speartrap"]

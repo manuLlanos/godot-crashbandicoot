@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cq7desf6kmmg3"]
+
+[ext_resource type="PackedScene" uid="uid://buoa0ok26kvmv" path="res://models/crystal.glb" id="1_jugw0"]
+[ext_resource type="Script" path="res://scenes/world/crystal.gd" id="1_qj26m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sbb2e"]
+albedo_color = Color(2, 0.078, 2, 1)
+metallic_specular = 1.0
+roughness = 0.2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xu7xi"]
+height = 0.840817
+radius = 0.175
+
+[node name="Crystal" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+script = ExtResource("1_qj26m")
+
+[node name="crystal" parent="." instance=ExtResource("1_jugw0")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Crystal" parent="crystal" index="0"]
+transform = Transform3D(0.352714, 0, -0.935731, 0, 1, 0, 0.935731, 0, 0.352714, 0, -0.076, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_sbb2e")
+
+[node name="AnimationPlayer" parent="crystal" index="1"]
+autoplay = "Float "
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460007, 0)
+shape = SubResource("CylinderShape3D_xu7xi")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+
+[editable path="crystal"]

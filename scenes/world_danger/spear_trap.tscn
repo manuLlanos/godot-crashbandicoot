@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://c5h6eydpsyd1n"]
+
+[ext_resource type="Script" path="res://scenes/world_danger/spear_trap.gd" id="1_hkehq"]
+[ext_resource type="PackedScene" uid="uid://b48bk07xaf7bl" path="res://models/speartrap.glb" id="2_y088w"]
+[ext_resource type="AudioStream" uid="uid://bmj2wsk3qhkf7" path="res://sounds/spike_trap_activate.wav" id="3_pgams"]
+[ext_resource type="PackedScene" uid="uid://5s0dxmwxgnof" path="res://scenes/components/hurtbox.tscn" id="3_u0ywj"]
+[ext_resource type="AudioStream" uid="uid://dpgvas2y2tgpk" path="res://sounds/spike_trap_deactivate.wav" id="4_7a2mb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7yk21"]
+size = Vector3(0.55, 0.827, 0.55)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_de4n8"]
+size = Vector3(0.5, 0.245, 0.5)
+
+[node name="SpearTrap" type="Node3D"]
+script = ExtResource("1_hkehq")
+
+[node name="Solidspears" type="CharacterBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Solidspears"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000696659, -0.367479, -0.00673485)
+shape = SubResource("BoxShape3D_7yk21")
+
+[node name="speartrap" parent="." instance=ExtResource("2_y088w")]
+unique_name_in_owner = true
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0)
+
+[node name="AnimationPlayer" parent="speartrap" index="2"]
+autoplay = "Idle "
+
+[node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="DelayTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_u0ywj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0790623, 0)
+collision_layer = 16
+
+[node name="CollisionShape3D" parent="Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000701904, -0.0350647, -0.00109863)
+shape = SubResource("BoxShape3D_de4n8")
+
+[node name="Sounds" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.245402, 0)
+
+[node name="Activate" type="AudioStreamPlayer3D" parent="Sounds"]
+stream = ExtResource("3_pgams")
+volume_db = -10.0
+max_distance = 30.0
+
+[node name="Deactivate" type="AudioStreamPlayer3D" parent="Sounds"]
+stream = ExtResource("4_7a2mb")
+volume_db = -5.0
+max_distance = 30.0
+
+[connection signal="animation_finished" from="speartrap/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+
+[editable path="speartrap"]
+[editable path="Hurtbox"]

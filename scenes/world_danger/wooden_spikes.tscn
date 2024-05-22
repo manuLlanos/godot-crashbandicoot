@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://du7rtyv5vkogw"]
+
+[ext_resource type="PackedScene" uid="uid://cv5xn46tb8reh" path="res://models/wooden_spikes.glb" id="1_g7jjw"]
+[ext_resource type="PackedScene" uid="uid://5s0dxmwxgnof" path="res://scenes/components/hurtbox.tscn" id="2_shkgj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kdgcg"]
+size = Vector3(0.585697, 0.496216, 0.670837)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1qe4k"]
+size = Vector3(0.55, 0.14588, 0.65)
+
+[node name="WoodenSpikes" type="StaticBody3D"]
+collision_mask = 0
+
+[node name="wooden_spikes" parent="." instance=ExtResource("1_g7jjw")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0068531, 0.251892, -0.00204468)
+shape = SubResource("BoxShape3D_kdgcg")
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_shkgj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.535082, 0)
+collision_layer = 16
+
+[node name="CollisionShape3D" parent="Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00569916, -0.00824076, -0.00131226)
+shape = SubResource("BoxShape3D_1qe4k")
+
+[editable path="wooden_spikes"]
+[editable path="Hurtbox"]
